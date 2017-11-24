@@ -15,7 +15,7 @@ echo <i>user</i>:<i>password</i> | chpasswd
 
 -	Tag : “Name”=”RStudio Server”
 -	Security Group : create a new security group with the following rule :
-  -	Custom TCP Rule for Port 8787, accepting connection from Anywhere
+   -	Custom TCP Rule for Port 8787, accepting connection from Anywhere
 
 Note : no need for other network inbound rules, SSH access can always be added later on in case of need (but the private key file associated to the instance should be kept securely).
 
