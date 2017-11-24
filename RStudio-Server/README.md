@@ -15,11 +15,11 @@ echo <i>user</i>:<i>password</i> | chpasswd
 
 -	Tag : “Name”=”RStudio Server”
 -	Security Group : create a new security group with the following rule :
-  -	Custom TCP Rule for Port 8787, accepting connection from Anywhere
+    -	Custom TCP Rule for Port 8787, accepting connection from Anywhere
 
 Note : no need for other network inbound rules, SSH access can always be added later on in case of need (but the private key file associated to the instance should be kept securely).
 
-When the instance is running get its Public DNS (IPv4) address from the EC2 instance screen.
+When the instance is running, get its Public DNS (IPv4) address from the EC2 instance screen.
 
 In a browser, connect to the instance on port 8787 using its public DNS address (i.e. with a URL such as http://<my.public.dns.amazonaws.com>:8787) and enter the user id “*user*“ and the password “*password*” to access a R Studio instance.
 
