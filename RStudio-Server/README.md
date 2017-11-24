@@ -9,7 +9,7 @@ yum -y update
 yum -y install R
 wget https://download2.rstudio.org/rstudio-server-rhel-1.1.383-x86_64.rpm
 yum -y install --nogpgcheck rstudio-server-rhel-1.1.383-x86_64.rpm
-adduser user
+adduser <i>user</i>
 echo user:password | chpasswd
 </pre>
 
