@@ -1,7 +1,7 @@
 Connect to the AWS console
 
 From the EC2 dashboard, launch an instance, using the default setting except for : 
--	Amazon Machine Image: Amazon Linux AMI*
+-	Amazon Machine Image: Amazon Linux AMI
 -	User data:
 <pre>
 #!/bin/bash
