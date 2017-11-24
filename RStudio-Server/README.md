@@ -3,15 +3,15 @@ Connect to the AWS console
 From the EC2 dashboard, launch an instance, using the default setting except for : 
 -	Amazon Machine Image: Amazon Linux AMI*
 -	User data:
-```
+<pre>
 #!/bin/bash
 yum -y update
 yum -y install R
 wget https://download2.rstudio.org/rstudio-server-rhel-1.1.383-x86_64.rpm
 yum -y install --nogpgcheck rstudio-server-rhel-1.1.383-x86_64.rpm
-```
-'adduser '*'user'*'
-echo *user*:*password* | chpasswd
+adduser user
+echo user:password | chpasswd
+</pre>
 
 -	Tag : “Name”=”RStudio Server”
 -	Security Group : create a new security group with the following rule :
