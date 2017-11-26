@@ -50,3 +50,5 @@ Private Server Checking:
 - check that it is not possible to ping or to connect to the "JumpBoxPrivate-1"
 - ssh to the "JumpBox" and from that instance ssh to "JumpBoxPrivate-1"
 - once on "JumpBoxPrivate-1", ping 8.8.8.8 to check internet access
+
+Note: http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html#nat-gateway-basics
