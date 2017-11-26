@@ -6,4 +6,7 @@ However, the VPC instance(s) should be able to access to the Internet.
 - create a subnet in that VPN named "JumpBoxTest-Public" having the CIDR 172.20.10.0/24,
 - create a subnet in that VPN named "JumpBoxTest-Private" having the CIDR 172.20.11.0/24 in another availability zone,
 - create an Internet Gateway named "JumpBoxTest-IGW",
-- attach it to the "JumpBoxTest" VPN,
+- attach it to the "JumpBoxTest" VPC,
+- create a security group named "JumpBox-SecurityGroup" in the "JumpBoxTest" VPC
+  - accepting SSH from anywhere
+- create an instance located into JumpBoxTest-Public having a public IP address,
