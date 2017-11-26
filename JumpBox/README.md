@@ -16,9 +16,9 @@ Note : a default route table get created for the VPC.
 - Add to the route table "JumpBoxTest" the route :
   - 0.0.0.0/0 : "JumpBoxTest-IGW",
 - create a new route table "JumpBoxPrivate" in the VPC "JumpBoxTest",
-- in the "JumpBoxTest" VPC, create a security group named "JumpBox-SecurityGroup" accepting SSH from anywhere,
+- in the "JumpBoxTest" VPC, create a security group named "JumpBox-SecurityGroup" accepting SSH and all ICMP from anywhere,
 
-Instances Settings:
+Jumpbox Settings:
 - create an EC2 instance :
    - AMI: Amazon Linux,
    - Network : "JumpBoxTest",
@@ -26,4 +26,22 @@ Instances Settings:
    - Public IP address: Enabled,
    - Name : "JumpBox",
    - Security Group : JumpBox-SecurityGroup
-- connect to the instance and add the private key to the .ssh directory (copy/paste its content for instance),
+- connect to the instance:
+  - add the private key to the .ssh directory (copy/paste its content for instance),
+  - ping 8.8.8.8 to check internet access
+
+
+Note: using the IP address or its DNS name, check that it is possible to ping the jump box from anywhere
+
+
+Private Server Settings:
+- create an EC2 instance :
+   - AMI: Amazon Linux,
+   - Network : "JumpBoxTest",
+   - Subnet : "JumpBoxTest-Private",
+   - Public IP address: Enabled,
+   - Name : "JumpBoxPrivate-1",
+   - Security Group : JumpBox-SecurityGroup
+
+Private Server Checking:
+- check that it is not possible to ping or to connect to the "JumpBoxPrivate-1"
