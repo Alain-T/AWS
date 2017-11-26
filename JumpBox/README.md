@@ -6,7 +6,7 @@ Network settings:
 - create a VPC named "JumpBoxTest", allocating a non routing CIDR, e.g. 172.20.0.0/16 and supporting DNS hostnames and DNS resolution,
 
 
-Note : a default route table also named "JumpBoxTest" also get created.
+Note : a default route table get created for the VPC.
 
 
 - in that VPC, create a subnet named "JumpBoxTest-Public" having the CIDR 172.20.10.0/24,
