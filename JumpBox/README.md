@@ -26,3 +26,4 @@ Instances Settings:
    - Public IP address: Enabled,
    - Name : "JumpBox",
    - Security Group : JumpBox-SecurityGroup
+- connect to the instance and add the private key to the .ssh directory (copy/paste its content for instance),
