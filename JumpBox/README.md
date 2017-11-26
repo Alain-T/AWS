@@ -8,8 +8,8 @@ However, the VPC instance(s) should be able to access to the Internet.
 - create an Internet Gateway named "JumpBoxTest-IGW",
 - attach it to the "JumpBoxTest" VPC,
 
-nn
-- in the "JumpBoxTest" VPC, create a security group named "JumpBox-SecurityGroup" accepting SSH from anywhere,
+
+* in the "JumpBoxTest" VPC, create a security group named "JumpBox-SecurityGroup" accepting SSH from anywhere,
 
   
 - create an EC2 instance :
