@@ -17,6 +17,9 @@ Note : a default route table get created for the VPC.
   - 0.0.0.0/0 : "JumpBoxTest-IGW",
 - create a new route table "JumpBoxPrivate" in the VPC "JumpBoxTest",
 - in the "JumpBoxTest" VPC, create a security group named "JumpBox-SecurityGroup" accepting SSH and all ICMP from anywhere,
+- create an NAT Internet Gateway named "JumpBoxTest-IGW" associating it a new Elastic IP,
+- Add to the route table "JumpBoxPrivate" the route :
+  - 0.0.0.0/0 : NAT Internet Gateway created above,
 
 Jumpbox Settings:
 - create an EC2 instance :
@@ -45,3 +48,5 @@ Private Server Settings:
 
 Private Server Checking:
 - check that it is not possible to ping or to connect to the "JumpBoxPrivate-1"
+- ssh to the "JumpBox" and from that instance ssh to "JumpBoxPrivate-1"
+- once on "JumpBoxPrivate-1", ping 8.8.8.8 to check internet access
