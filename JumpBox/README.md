@@ -33,6 +33,18 @@ Jumpbox Settings:
   - add the private key to the .ssh directory (copy/paste its content for instance),
   - ping 8.8.8.8 to check internet access
 
+Nat instance Settings:
+- create an EC2 instance :
+   - AMI: **amzn-ami-vpc-nat**-hvm-2017.09.1.20171120-x86_64-ebs,
+   - Network : "JumpBoxTest",
+   - Subnet : "JumpBoxTest-Public",
+   - Public IP address: Enabled,
+   - Name : "JumpBoxNatInstance",
+   - Security Group : JumpBox-SecurityGroup
+
+From a terminal:
+scp the private key to the NAT instance (the connect string can be used a basis)
+
 
 Note: using the IP address or its DNS name, check that it is possible to ping the jump box from anywhere
 
@@ -51,4 +63,7 @@ Private Server Checking:
 - ssh to the "JumpBox" and from that instance ssh to "JumpBoxPrivate-1"
 - once on "JumpBoxPrivate-1", ping 8.8.8.8 to check internet access
 
-Note: http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html#nat-gateway-basics
+
+Reference:
+- http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html#nat-gateway-basics
+- http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_NAT_Instance.html
