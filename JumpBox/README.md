@@ -41,10 +41,13 @@ Nat instance Settings:
    - Public IP address: Enabled,
    - Name : "JumpBoxNatInstance",
    - Security Group : JumpBox-SecurityGroup
+    
+Nat instance Configuration:
+- disable Source/Destination Check,
+- From a terminal:
+  - Copy the private key to the NAT instance using scp (the connect string can be used a basis) : <br/>   
+    scp -i *private_key.pem* *private_key.pem* ec2-user@*instance*.compute.amazonaws.com:.ssh
 
-From a terminal:
-Copy the private key to the NAT instance using scp (the connect string can be used a basis) : <br/>
-scp -i *private_key.pem* *private_key.pem* ec2-user@*instance*.compute.amazonaws.com:.ssh
 
 Note: using the IP address or its DNS name, check that it is possible to ping the jump box from anywhere
 
