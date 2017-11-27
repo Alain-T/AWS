@@ -35,11 +35,14 @@ Note : a default route table get created for the VPC.
    - Security Group : JumpBox-SecurityGroup
 
 ### NAT Internet Gateway and dedicated Jumpbox
+#### NAT Internet Gateway Settings 
 - create an NAT Internet Gateway named "JumpBoxTest-IGW" associating it a new Elastic IP,
+
+#### Private Subnet route table Configuration
 - Add to the route table "JumpBoxPrivate" the route :
   - 0.0.0.0/0 : NAT Internet Gateway created above,
 
-Jumpbox Settings:
+#### Jump box Settings:
 - create an EC2 instance :
    - AMI: Amazon Linux,
    - Network : "JumpBoxTest",
@@ -53,7 +56,7 @@ Jumpbox Settings:
   - connect ping 8.8.8.8 to check internet access
 
 ### NAT Instance
-Nat instance Settings:
+#### Nat instance Settings:
 - create an EC2 instance :
    - AMI: **amzn-ami-vpc-nat**-hvm-2017.09.1.20171120-x86_64-ebs,
    - Network : "JumpBoxTest",
@@ -62,15 +65,15 @@ Nat instance Settings:
    - Name : "JumpBoxNatInstance",
    - Security Group : JumpBox-SecurityGroup
 
-- Add to the route table "JumpBoxPrivate" the route :
-  - 0.0.0.0/0 : NAT Instance created above,
-
-Nat instance Configuration:
+#### Nat instance Configuration:
 - disable Source/Destination Check,
 - From a terminal:
   - Copy the private key to the NAT instance using scp (the connect string can be used a basis) :   
     scp -i *private_key.pem* *private_key.pem* ec2-user@*instance*.compute.amazonaws.com:.
 
+#### Private Subnet route table Configuration
+- Add to the route table "JumpBoxPrivate" the route :
+  - 0.0.0.0/0 : NAT Instance created above,
 
 ### Private Server Checking:
 - ssh to the "JumpBox" or the NAT instance,
