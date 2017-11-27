@@ -24,7 +24,6 @@ Note : a default route table get created for the VPC.
 - create a new route table "JumpBoxPrivate" in the VPC "JumpBoxTest",
 - in the "JumpBoxTest" VPC, create a security group named "JumpBox-SecurityGroup" accepting SSH and all ICMP from anywhere,
 
-
 ### Private Server Settings
 - create an EC2 instance :
    - AMI: Amazon Linux,
@@ -34,26 +33,6 @@ Note : a default route table get created for the VPC.
    - Name : "JumpBoxPrivate-1",
    - Security Group : JumpBox-SecurityGroup
 
-### NAT Internet Gateway and dedicated Jumpbox
-#### NAT Internet Gateway Settings 
-- create an NAT Internet Gateway named "JumpBoxTest-IGW" associating it a new Elastic IP,
-
-#### Private Subnet route table Configuration
-- Add to the route table "JumpBoxPrivate" the route :
-  - 0.0.0.0/0 : NAT Internet Gateway created above,
-
-#### Jump box Settings:
-- create an EC2 instance :
-   - AMI: Amazon Linux,
-   - Network : "JumpBoxTest",
-   - Subnet : "JumpBoxTest-Public",
-   - Public IP address: Enabled,
-   - Name : "JumpBox",
-   - Security Group : JumpBox-SecurityGroup
-- From a terminal:
-  - Copy the private key to the Jump box using scp (the connect string can be used a basis) :   
-    scp -i *private_key.pem* *private_key.pem* ec2-user@*instance*.compute.amazonaws.com:.
-  
 ### NAT Instance
 #### Nat instance Settings:
 - create an EC2 instance :
@@ -74,6 +53,27 @@ Note : a default route table get created for the VPC.
 - Add to the route table "JumpBoxPrivate" the route :
   - 0.0.0.0/0 : NAT Instance created above,
 
+### NAT Internet Gateway and dedicated Jumpbox
+**this section is an alternate solution to the NAT instance described above**
+#### NAT Internet Gateway Settings 
+- create an NAT Internet Gateway named "JumpBoxTest-IGW" associating it a new Elastic IP,
+
+#### Private Subnet route table Configuration
+- Add to the route table "JumpBoxPrivate" the route :
+  - 0.0.0.0/0 : NAT Internet Gateway created above,
+
+#### Jump box Settings:
+- create an EC2 instance :
+   - AMI: Amazon Linux,
+   - Network : "JumpBoxTest",
+   - Subnet : "JumpBoxTest-Public",
+   - Public IP address: Enabled,
+   - Name : "JumpBox",
+   - Security Group : JumpBox-SecurityGroup
+- From a terminal:
+  - Copy the private key to the Jump box using scp (the connect string can be used a basis) :   
+    scp -i *private_key.pem* *private_key.pem* ec2-user@*instance*.compute.amazonaws.com:.
+  
 ### Private Server Checking
 - ssh to the jump box or the NAT instance,
 - ping 8.8.8.8 to check internet access,
