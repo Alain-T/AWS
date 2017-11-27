@@ -51,10 +51,9 @@ Note : a default route table get created for the VPC.
    - Name : "JumpBox",
    - Security Group : JumpBox-SecurityGroup
 - From a terminal:
-  - Copy the private key to the Jumpbox using scp (the connect string can be used a basis) :   
+  - Copy the private key to the Jump box using scp (the connect string can be used a basis) :   
     scp -i *private_key.pem* *private_key.pem* ec2-user@*instance*.compute.amazonaws.com:.
-  - connect ping 8.8.8.8 to check internet access
-
+  
 ### NAT Instance
 #### Nat instance Settings:
 - create an EC2 instance :
@@ -75,8 +74,9 @@ Note : a default route table get created for the VPC.
 - Add to the route table "JumpBoxPrivate" the route :
   - 0.0.0.0/0 : NAT Instance created above,
 
-### Private Server Checking:
-- ssh to the "JumpBox" or the NAT instance,
+### Private Server Checking
+- ssh to the jump box or the NAT instance,
+- ping 8.8.8.8 to check internet access,
 - from that instance ssh to "JumpBoxPrivate-1",
 - once on "JumpBoxPrivate-1", check internet access using  curl --head http://www.google.com/
 
