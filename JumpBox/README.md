@@ -2,6 +2,12 @@ The goal is to create an isolated VPC accessible from the Internet only through 
 
 However, the VPC instance(s) should be able to access to the Internet.
 
+It can be achieved by 2 means:
+- either creating a NAT Internet Gateway and dedicated jump box,
+- or by creating a NAT instance also used as a jump box.
+
+Both solutions are described below.
+
 ###  Network settings
 - create a VPC named "JumpBoxTest", allocating a non routing CIDR, e.g. 172.20.0.0/16 and supporting DNS hostnames and DNS resolution,
 
@@ -55,7 +61,10 @@ Nat instance Settings:
    - Public IP address: Enabled,
    - Name : "JumpBoxNatInstance",
    - Security Group : JumpBox-SecurityGroup
-    
+
+- Add to the route table "JumpBoxPrivate" the route :
+  - 0.0.0.0/0 : NAT Instance created above,
+
 Nat instance Configuration:
 - disable Source/Destination Check,
 - From a terminal:
@@ -63,18 +72,11 @@ Nat instance Configuration:
     scp -i *private_key.pem* *private_key.pem* ec2-user@*instance*.compute.amazonaws.com:.
 
 
-Private Server Checking:
-- ssh to the "JumpBox" and from that instance ssh to "JumpBoxPrivate-1"
+### Private Server Checking:
+- ssh to the "JumpBox" or the NAT instance,
+- from that instance ssh to "JumpBoxPrivate-1",
 - once on "JumpBoxPrivate-1", check internet access using  curl --head http://www.google.com/
 
-
-
-
-Note: using the IP address or its DNS name, check that it is possible to ping the jump box from anywhere
-
-
-
-
-Reference:
+### Reference:
 - http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html#nat-gateway-basics
 - http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_NAT_Instance.html
