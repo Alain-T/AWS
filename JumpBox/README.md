@@ -54,7 +54,7 @@ Note : a default route table get created for the VPC.
   - 0.0.0.0/0 : NAT Instance created above,
 
 ### NAT Internet Gateway and dedicated Jumpbox
-**this section is an alternate solution to the NAT instance described above**
+**This section is an alternate solution to the NAT instance described above**
 #### NAT Internet Gateway Settings 
 - create an NAT Internet Gateway named "JumpBoxTest-IGW" associating it a new Elastic IP,
 
