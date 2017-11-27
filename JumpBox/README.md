@@ -81,5 +81,5 @@ Note : a default route table get created for the VPC.
 - once on "JumpBoxPrivate-1", check internet access using  curl --head http://www.google.com/
 
 ### Reference:
-- http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html#nat-gateway-basics
+- http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html
 - http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_NAT_Instance.html
