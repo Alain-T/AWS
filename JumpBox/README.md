@@ -2,7 +2,13 @@ The goal is to create an isolated VPC accessible from the Internet only through 
 
 However, the VPC instance(s) should be able to access to the Internet.
 
-Network settings:
+It can be achieved by 2 means:
+- either creating a NAT Internet Gateway and dedicated jump box,
+- or by creating a NAT instance also used as a jump box.
+
+Both solutions are described below.
+
+###  Network settings
 - create a VPC named "JumpBoxTest", allocating a non routing CIDR, e.g. 172.20.0.0/16 and supporting DNS hostnames and DNS resolution,
 
 
@@ -17,11 +23,46 @@ Note : a default route table get created for the VPC.
   - 0.0.0.0/0 : "JumpBoxTest-IGW",
 - create a new route table "JumpBoxPrivate" in the VPC "JumpBoxTest",
 - in the "JumpBoxTest" VPC, create a security group named "JumpBox-SecurityGroup" accepting SSH and all ICMP from anywhere,
+
+### Private Server Settings
+- create an EC2 instance :
+   - AMI: Amazon Linux,
+   - Network : "JumpBoxTest",
+   - Subnet : "JumpBoxTest-Private",
+   - Public IP address: Disabled,
+   - Name : "JumpBoxPrivate-1",
+   - Security Group : JumpBox-SecurityGroup
+
+### NAT Instance
+#### Nat instance Settings:
+- create an EC2 instance :
+   - AMI: **amzn-ami-vpc-nat**-hvm-2017.09.1.20171120-x86_64-ebs,
+   - Network : "JumpBoxTest",
+   - Subnet : "JumpBoxTest-Public",
+   - Public IP address: Enabled,
+   - Name : "JumpBoxNatInstance",
+   - Security Group : JumpBox-SecurityGroup
+
+#### Nat instance Configuration:
+- disable Source/Destination Check,
+- From a terminal:
+  - Copy the private key to the NAT instance using scp (the connect string can be used a basis) :   
+    scp -i *private_key.pem* *private_key.pem* ec2-user@*instance*.compute.amazonaws.com:.
+
+#### Private Subnet route table Configuration
+- Add to the route table "JumpBoxPrivate" the route :
+  - 0.0.0.0/0 : NAT Instance created above,
+
+### NAT Internet Gateway and dedicated Jumpbox
+**This section is an alternate solution to the NAT instance described above**
+#### NAT Internet Gateway Settings 
 - create an NAT Internet Gateway named "JumpBoxTest-IGW" associating it a new Elastic IP,
+
+#### Private Subnet route table Configuration
 - Add to the route table "JumpBoxPrivate" the route :
   - 0.0.0.0/0 : NAT Internet Gateway created above,
 
-Jumpbox Settings:
+#### Jump box Settings:
 - create an EC2 instance :
    - AMI: Amazon Linux,
    - Network : "JumpBoxTest",
@@ -29,26 +70,16 @@ Jumpbox Settings:
    - Public IP address: Enabled,
    - Name : "JumpBox",
    - Security Group : JumpBox-SecurityGroup
-- connect to the instance:
-  - add the private key to the .ssh directory (copy/paste its content for instance),
-  - ping 8.8.8.8 to check internet access
+- From a terminal:
+  - Copy the private key to the Jump box using scp (the connect string can be used a basis) :   
+    scp -i *private_key.pem* *private_key.pem* ec2-user@*instance*.compute.amazonaws.com:.
+  
+### Private Server Checking
+- ssh to the jump box or the NAT instance,
+- ping 8.8.8.8 to check internet access,
+- from that instance ssh to "JumpBoxPrivate-1",
+- once on "JumpBoxPrivate-1", check internet access using  curl --head http://www.google.com/
 
-
-Note: using the IP address or its DNS name, check that it is possible to ping the jump box from anywhere
-
-
-Private Server Settings:
-- create an EC2 instance :
-   - AMI: Amazon Linux,
-   - Network : "JumpBoxTest",
-   - Subnet : "JumpBoxTest-Private",
-   - Public IP address: Enabled,
-   - Name : "JumpBoxPrivate-1",
-   - Security Group : JumpBox-SecurityGroup
-
-Private Server Checking:
-- check that it is not possible to ping or to connect to the "JumpBoxPrivate-1"
-- ssh to the "JumpBox" and from that instance ssh to "JumpBoxPrivate-1"
-- once on "JumpBoxPrivate-1", ping 8.8.8.8 to check internet access
-
-Note: http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html#nat-gateway-basics
+### Reference:
+- http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-gateway.html
+- http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_NAT_Instance.html
