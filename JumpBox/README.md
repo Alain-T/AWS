@@ -45,7 +45,7 @@ Nat instance Settings:
 Nat instance Configuration:
 - disable Source/Destination Check,
 - From a terminal:
-  - Copy the private key to the NAT instance using scp (the connect string can be used a basis) : <br/>   
+  - Copy the private key to the NAT instance using scp (the connect string can be used a basis) :   
     scp -i *private_key.pem* *private_key.pem* ec2-user@*instance*.compute.amazonaws.com:.ssh
 
 
