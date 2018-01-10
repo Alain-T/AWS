@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html ng-app="my_aws_app">
+
+<head>
+<meta charset="UTF-8">
+<title>Document Title</title>
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.175.0.js"></script>
+<script src="aws-code.js"></script>
+
+<body>
+
+<h1>AWS Credentials</h1>
+<div ng-controller="credentials_controller">
+  <form novalidate>
+	<p>Access key ID : <input type="password" name="Access key ID" placeholder="enter Access key ID" ng-model="key_id" /></p>
+	<p>Secret access key : <input type="password" name="Secret access key" placeholder="enter Secret access key" ng-model="secret_key" /></p>
+  </form>
+  <button ng-click="clear()">Clear</button>
+  <button ng-click="update_config()">Update</button>
+  <!-- <p>key_id = {{key_id}}</p> -->
+  <!-- <p>secret_key = {{secret_key}}</p> -->
+</div>
+
+<h1>Rekognition</h1>
+<h2>Collections</h2>
+<div ng-controller="collections_controller">
+  <div>
+	  <button ng-click="clear_listCollections_Answer()">Clear</button>
+	  <button ng-click="listCollections_UI()">listCollections</button>
+	  <p>Answer: <pre>{{listCollections_Answer}}</pre></p>
+  </div>
+  
+  <div>
+	  <form novalidate>
+		<!-- ng-init="collection=''" -->
+		<p>Collection name: <input type="texte" name="collection" placeholder="enter collection name" ng-model="RekognitionEnv.collection"/></p>
+	  </form>
+      <div>
+	    <button ng-click="clear_Collection_Answer()">Clear</button>
+	    <button ng-click="createCollection_UI()">createCollection</button>
+	    <button ng-click="deleteCollection_UI()">deleteCollection</button>
+	  </div>
+	  <p>Answer: <pre>{{Collection_Answer}}</pre></p>
+  </div>
+  <br>
+</div>
+
+<h2>Faces Management</h2>
+<div ng-controller="FacesManagement_controller">
+  <div>Collection: {{RekognitionEnv.collection}}</div>	 
+  <div>
+      <div>
+	    <button ng-click="clear_listFaces_Answer()">Clear</button>
+		<button ng-click="listFaces_UI()">listFaces</button>
+	  </div>
+	  <p>Answer: <pre>{{listFaces_Answer}}</pre></p>
+  </div>
+  <br>
+  <div>
+    <form novalidate>
+		<p>Face id: <input type="texte" name="faceId" placeholder="enter face id" ng-model="faceId"/></p>
+	</form>
+      <div>
+	    <button ng-click="clear_deleteFaces_Answer()">Clear</button>
+		<button ng-click="deleteFaces_UI()">deleteFaces</button>
+	  </div>
+	  <p>Answer: <pre>{{deleteFaces_Answer}}</pre></p>
+  </div>
+</div>
+
+<h2>Image Faces Searching</h2>
+<div ng-controller="searchFacesByImage_controller">
+  <div>
+	<div>Collection: {{RekognitionEnv.collection}}</div>	 
+    <form novalidate>
+		<p>MaxFaces: <input type="texte" name="maxFaces" placeholder="enter max nb faces" ng-model="maxFaces"/></p>
+		<p>FaceMatchThreshold: <input type="texte" name="faceMatchThreshold" placeholder="enter face match threshold" ng-model="faceMatchThreshold"/></p>
+	</form>
+	<br>
+	<button ng-click="clear_searchFacesByImage_Answer()">Clear</button>
+    <button ng-click="searchFacesByImage_UI()">searchFacesByImage</button>
+	<p>Answer: <pre>{{searchFacesByImage_Answer}}</pre></p>
+  </div>
+  <br>
+</div>
+
+<h2>Image Faces Learning</h2>
+<div ng-controller="indexFaces_controller">
+  <div>
+	<div>Collection: {{RekognitionEnv.collection}}</div>	 
+	<br>
+	<button ng-click="clear_indexFaces_Answer()">Clear</button>
+    <button ng-click="indexFaces_UI()">indexFaces</button>
+	<p>Answer: <pre>{{indexFaces_Answer}}</pre></p>
+  </div>
+  <br>
+</div>
+
+
+<h2>Image Faces Detection</h2>
+<div ng-controller="detectFaces_controller">
+  <div>
+	<div>Collection: {{RekognitionEnv.collection}}</div>	 
+	<br>
+	<button ng-click="clear_detectFaces_Answer()">Clear</button>
+    <button ng-click="detectFaces_UI()">detectFaces</button>
+	<p>Answer: <pre>{{detectFaces_Answer}}</pre></p>
+  </div>
+  <br>
+</div>
+
+<h1>Image Selection</h1>
+<div ng-controller="image_controller"> 
+  <!-- <p>myIndex = {{myIndex}}; myValue = {{myValue}}</p> -->
+
+  <div ng-repeat="items in items_array">
+	<span ng-repeat="item in items">
+		<a href ng-click="getCtrlScope().setImage($parent.$index, $index)">{{item.id}}</a>
+	&nbsp;&nbsp;
+	</span>
+  </div>
+  
+  <div ng-repeat="item in items">
+    <a href ng-click="getCtrlScope().myValue = $index">{{item.id}}</a><br />
+  </div>
+  
+  <form novalidate>
+	<p>Image URL: <input type="texte" name="imageUrl" placeholder="enter ImgUrl" ng-model="imageUrl"/></p>
+	<p>Image ID : <input type="texte" name="imageId"  placeholder="enter ImgId"  ng-model="imageId"/></p>
+  </form>
+  
+  <button ng-click="loadImage()">loadImage</button>
+   <p>Image:</p>
+  <img data-ng-src="data:image/png;base64,{{img}}">
+</div>
+ 
+</body>
+
+</html>
