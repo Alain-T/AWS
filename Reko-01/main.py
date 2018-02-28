@@ -10,7 +10,7 @@ def reko_test():
     client = boto3.client(
         'rekognition',
         'us-east-1',
-        aws_access_key_id='='AKIA...',
+        aws_access_key_id='AKIA...',
         aws_secret_access_key=''
     )
 
